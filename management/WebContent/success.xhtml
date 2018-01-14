@@ -1,0 +1,79 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://java.sun.com/jsf/core">
+     
+    <h:head>
+        <title>List of all clients</title>
+    </h:head>
+     
+    <h:body>
+        Clients:
+        <h:form id="actorsTableForm">
+        	<p:growl id="msgs" showDetail="true"/>
+        	<p:dataTable id="cls" var="client" value="#{successBean.clients}" rows="10"
+                         paginator="true"
+                         editable="true"
+                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15">
+                <p:ajax event="rowEdit" listener="#{successBean.edit}" update=":actorsTableForm:msgs" />
+       			<p:ajax event="rowEditCancel" listener="#{successBean.cancelEvent}" update=":actorsTableForm:msgs" />
+			    <p:column headerText="Id">
+			        <h:outputText value="#{client.id}" />
+			    </p:column>
+			 
+			    <p:column headerText="First name">
+			        <p:cellEditor>
+			    		<f:facet name="output"><h:outputText value="#{client.fname}" /></f:facet>
+			        	<f:facet name="input"><p:inputText id="fname" value="#{client.fname}" style="width:100%"/></f:facet>
+			
+			    	</p:cellEditor>
+			    </p:column>
+			 	
+			    <p:column headerText="Last name">
+			    	<p:cellEditor>
+			    		<f:facet name="output"><h:outputText value="#{client.lname}" /></f:facet>
+			        	<f:facet name="input"><p:inputText id="lname" value="#{client.lname}" style="width:100%"/></f:facet>
+			
+			    	</p:cellEditor>
+			    </p:column>
+			 	
+			    <p:column headerText="Birth Date">
+			        <p:cellEditor>
+			    		<f:facet name="output"><h:outputText value="#{client.bday}" /></f:facet>
+			        	<f:facet name="input">
+			        		<p:inputText id="bday" value="#{client.bday}" style="width:100%"/>
+			        	</f:facet>
+			
+			    	</p:cellEditor>
+			    </p:column>
+			    <p:column headerText="Email">
+			        <p:cellEditor>
+			    		<f:facet name="output"><h:outputText value="#{client.email}" /></f:facet>
+			        	<f:facet name="input"><p:inputText id="email" value="#{client.email}" style="width:100%"/></f:facet>
+			
+			    	</p:cellEditor>
+			    </p:column>
+			    <p:column headerText="">
+				    <p:growl id="message" showDetail="true" />
+				    <p:commandButton actionListener="#{successBean.delete(client)}" id="iconOnly" update="cls" icon="ui-icon-trash" title="Delete"  >
+
+				      <p:confirm header="Confirmation" message="Are you sure?" icon="ui-icon-alert" />
+				     </p:commandButton>
+				 
+				     <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" >
+				        <p:commandButton value="Yes"  type="button"  styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+				    </p:confirmDialog>
+				  
+                </p:column>
+                
+                <p:column style="width:32px">
+		           <p:rowEditor />
+		       </p:column>
+			</p:dataTable>
+		</h:form>
+
+    </h:body>
+ 
+</html>
